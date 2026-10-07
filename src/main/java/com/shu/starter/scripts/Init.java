@@ -62,6 +62,8 @@ public class Init {
     String def = old.getOrDefault(key, fallback);
     String suffix = def == null || def.isBlank() ? "" : " (" + def + ")";
     System.out.print(question + suffix + ": ");
+    // print 不带换行，管道/行缓冲终端下显式 flush 保证提示语先于等待输入可见
+    System.out.flush();
     String answer = reader.readLine();
     if (answer == null) return def == null ? "" : def;
     answer = answer.trim();

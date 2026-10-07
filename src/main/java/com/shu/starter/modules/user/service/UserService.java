@@ -1,7 +1,6 @@
 package com.shu.starter.modules.user.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.shu.starter.common.entity.UserType;
 import com.shu.starter.common.exception.BusinessException;
 import com.shu.starter.common.exception.ErrorCode;
 import com.shu.starter.common.query.QueryResult;

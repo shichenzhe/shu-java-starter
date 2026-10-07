@@ -10,7 +10,7 @@
     <relativePath/>
   </parent>
   <groupId>com.shu</groupId>
-  <!-- Maven 对 artifactId 有 id 格式校验，不允许 {{APP_NAME}} 占位符：模板内固定为 starter（与包名 com.shu.starter 对应），init 脚本负责替换为应用名 -->
+  <!-- Maven 对 artifactId 有 id 格式校验，不允许占位符字面量：artifactId 固定为 starter（与包名 com.shu.starter 对应），应用名见 <name>/<description>，占位符替换见 scripts/Init.java -->
   <artifactId>starter</artifactId>
   <version>0.1.0</version>
   <name>{{APP_NAME}}</name>

@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -17,9 +19,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class MybatisPlusConfig {
 
   @Bean
-  public MybatisPlusInterceptor mybatisPlusInterceptor() {
+  public MybatisPlusInterceptor mybatisPlusInterceptor(Environment environment) {
+    // 分页方言随激活 profile 走：postgresql → PG，默认（sqlite）→ SQLite
+    DbType dbType =
+        environment.acceptsProfiles(Profiles.of("postgresql")) ? DbType.POSTGRE_SQL : DbType.SQLITE;
     MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-    PaginationInnerInterceptor pagination = new PaginationInnerInterceptor(DbType.SQLITE);
+    PaginationInnerInterceptor pagination = new PaginationInnerInterceptor(dbType);
     pagination.setOptimizeJoin(true);
     interceptor.addInnerInterceptor(pagination);
     return interceptor;

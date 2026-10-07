@@ -43,7 +43,8 @@ java src/main/java/com/shu/starter/scripts/Init.java
   - `auth/` - JwtService（HS256 签发/校验，访问+刷新双令牌）、JwtAuthFilter（Bearer 解析，
     仅挂 Security 链一次，不注册为 Bean）、SecurityConfig（无状态、permitAll 路径、401 入口
     统一 JSON）、UserPrincipal（UserDetails，自动加 ROLE_ 前缀）
-  - `config/` - AppProps（`app.*` 配置绑定 record）、MybatisPlusConfig（分页插件 +
+  - `config/` - AppProps（`app.*` 配置绑定 record）、AppPropsBeans（AppProps 嵌套 record 的
+    Bean 桥接，如 AppProps.Jwt 供 JwtService 注入）、MybatisPlusConfig（分页插件 +
     MetaObjectHandler 审计填充）、DataDirInitializer（启动兜底创建 data/ 目录）
   - `entity/` - BaseEntity（审计字段基类）、UuidIdentifierGenerator（UUIDv7）、
     UserType（admin/user）、Operator
