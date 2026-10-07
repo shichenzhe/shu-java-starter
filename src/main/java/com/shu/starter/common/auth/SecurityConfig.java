@@ -23,7 +23,7 @@ public class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter)
+  public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtService jwtService)
       throws Exception {
     http.csrf(csrf -> csrf.disable())
         .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -43,6 +43,8 @@ public class SecurityConfig {
                 e.authenticationEntryPoint(
                     (request, response, ex) -> {
                       response.setStatus(401);
+                      // 显式 UTF-8：否则 Tomcat 默认 ISO-8859-1，中文 message 输出为 '?'
+                      response.setCharacterEncoding("UTF-8");
                       response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                       response
                           .getWriter()
@@ -54,7 +56,9 @@ public class SecurityConfig {
                                       : "\"" + request.getHeader("trace_id") + "\"")
                                   + "}");
                     }))
-        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        // 过滤器不注册为 Bean（无 @Component）：避免 Boot 把 Filter Bean 再自动登记进
+        // servlet 容器链造成双注册，仅在此处经 addFilterBefore 挂入 Security 链一次
+        .addFilterBefore(new JwtAuthFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 }

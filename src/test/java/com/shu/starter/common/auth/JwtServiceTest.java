@@ -32,8 +32,9 @@ class JwtServiceTest {
 
   @Test
   void 过期令牌校验失败() {
+    // 负 TTL：签发即已过期（expiration=now-1s），避免 TTL=0 同毫秒解析的理论竞态
     JwtService service =
-        new JwtService(new AppProps.Jwt("s", Duration.ofSeconds(0), Duration.ofSeconds(0)));
+        new JwtService(new AppProps.Jwt("s", Duration.ofMillis(-1000), Duration.ofMillis(-1000)));
     UserPrincipal principal = new UserPrincipal("id-1", "u", UserType.user);
     String token = service.generateTokens(principal).accessToken();
     assertThrows(Exception.class, () -> service.verify(token));

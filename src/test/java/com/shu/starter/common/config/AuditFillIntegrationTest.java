@@ -39,6 +39,8 @@ class AuditFillIntegrationTest {
 
   @Test
   void 无登录态insert审计字段填充SYSTEM() {
+    // 前置清理：防止其他用例遗留的登录态污染"无登录态"前提（JUnit 用例顺序不保证）
+    SecurityContextHolder.clearContext();
     UserEntity e = newUser();
     userMapper.insert(e);
     UserEntity reloaded = userMapper.selectById(e.getId());

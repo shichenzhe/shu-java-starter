@@ -8,10 +8,12 @@ import java.io.IOException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Component
+/**
+ * 不加 @Component / 不注册为 Bean：由 SecurityConfig 显式构造并经 addFilterBefore 挂入
+ * Security 链一次，避免 Boot 将 Filter Bean 额外自动登记进 servlet 容器链（双注册）。
+ */
 public class JwtAuthFilter extends OncePerRequestFilter {
   private final JwtService jwtService;
 
