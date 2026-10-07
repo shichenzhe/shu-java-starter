@@ -11,3 +11,4 @@ shu-init.json
 !.gitignore
 !.github/
 !.mvn/
+!.dockerignore
