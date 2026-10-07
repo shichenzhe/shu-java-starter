@@ -120,6 +120,19 @@
       <artifactId>spring-security-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Boot 4 模块化拆分：TestRestTemplate 移出 spring-boot-test，落位 classic 模块
+         spring-boot-resttestclient（包名 org.springframework.boot.resttestclient） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- TestRestTemplate 底层依赖 RestTemplateBuilder（spring-boot-restclient） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-restclient</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

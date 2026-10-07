@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.shu.starter.common.auth.UserPrincipal;
 import com.shu.starter.common.entity.Operator;
 import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Configuration
 public class MybatisPlusConfig {
@@ -50,8 +53,12 @@ public class MybatisPlusConfig {
         strictUpdateFill(metaObject, "updatedAt", LocalDateTime.class, LocalDateTime.now());
       }
 
-      /** Task 3 引入 OperatorPrincipal 后改为从 SecurityContextHolder 取登录态 */
+      /** 登录态取 SecurityContext 中的 UserPrincipal，否则 SYSTEM */
       private Operator currentOperator() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof UserPrincipal p) {
+          return new Operator(p.id(), p.name());
+        }
         return Operator.SYSTEM;
       }
     };

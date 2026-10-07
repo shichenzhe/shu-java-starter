@@ -1,5 +1,6 @@
 # 测试配置：classpath 上本文件整体遮蔽（非合并）主 application.yml，
-# 故须自带 flyway locations 等；仅 datasource.url 换为独立库文件（随 target/ 清理）。
+# 故须自带 flyway locations、app.jwt 等（JwtService Bean 依赖 app.jwt.* 绑定）；
+# 仅 datasource.url 换为独立库文件（随 target/ 清理）。
 spring:
   datasource:
     url: jdbc:sqlite:target/test-migration.db
@@ -11,3 +12,12 @@ spring:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+
+app:
+  name: starter-test
+  jwt:
+    secret: test-jwt-secret-not-for-production
+    expires-in: PT30M
+    refresh-expires-in: PT12H
+  operation-log:
+    enabled: true
