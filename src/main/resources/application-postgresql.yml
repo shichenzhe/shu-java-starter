@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/starter}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    locations: classpath:db/migration/postgresql
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true

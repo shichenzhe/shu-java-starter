@@ -1,0 +1,13 @@
+target/
+logs/
+data/
+*.db
+shu-init.json
+.DS_Store
+.idea/
+*.iml
+
+# 本机全局 gitignore 的 .* 规则会吞 dotfile，显式否定保持模板自包含
+!.gitignore
+!.github/
+!.mvn/
