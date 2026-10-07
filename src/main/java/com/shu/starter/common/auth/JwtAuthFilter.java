@@ -21,6 +21,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     this.jwtService = jwtService;
   }
 
+  // Boot 默认把 Security 链注册进 ERROR dispatch（dispatcher-types 含 error）；
+  // OncePerRequestFilter 默认跳过 error dispatch，会令鉴权后的 /error 分发
+  // （404/405/415 → ApiErrorController）落入 401。此处放行：无状态 JWT 在
+  // 每次分发重新校验 Authorization 头（ERROR dispatch 保留原请求头）。
+  @Override
+  protected boolean shouldNotFilterErrorDispatch() {
+    return false;
+  }
+
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain chain)

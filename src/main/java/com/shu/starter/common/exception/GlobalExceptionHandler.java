@@ -9,7 +9,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+// 404/405/415 无 HandlerMethod，@ExceptionHandler 捕不到：由 ApiErrorController 的 /error 统一分发
 
 @RestControllerAdvice(basePackages = "com.shu.starter.modules")
 public class GlobalExceptionHandler {
@@ -43,12 +44,6 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiResponse<Void>> unauthorized(AuthenticationException e) {
     return ResponseEntity.status(401)
         .body(ApiResponse.error(ErrorCode.UNAUTHORIZED.code(), "未认证或令牌无效"));
-  }
-
-  @ExceptionHandler(NoResourceFoundException.class)
-  public ResponseEntity<ApiResponse<Void>> notFound(NoResourceFoundException e) {
-    return ResponseEntity.status(404)
-        .body(ApiResponse.error(ErrorCode.NOT_FOUND.code(), "资源不存在"));
   }
 
   @ExceptionHandler(Exception.class)

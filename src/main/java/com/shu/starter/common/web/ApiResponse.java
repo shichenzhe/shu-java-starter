@@ -15,10 +15,11 @@ public class ApiResponse<T> {
   private String traceId;
 
   public static <T> ApiResponse<T> ok(T data) {
-    return new ApiResponse<>(ErrorCode.SUCCESS.code(), true, data, "操作成功", MDC.get("trace_id"));
+    return new ApiResponse<>(
+        ErrorCode.SUCCESS.code(), true, data, "操作成功", MDC.get(TraceIdFilter.TRACE_ID));
   }
 
   public static <T> ApiResponse<T> error(String code, String message) {
-    return new ApiResponse<>(code, false, null, message, MDC.get("trace_id"));
+    return new ApiResponse<>(code, false, null, message, MDC.get(TraceIdFilter.TRACE_ID));
   }
 }

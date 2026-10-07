@@ -1,5 +1,6 @@
 package com.shu.starter.common.auth;
 
+import com.shu.starter.common.web.TraceIdFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -51,9 +52,11 @@ public class SecurityConfig {
                           .write(
                               "{\"code\":\"4010\",\"success\":false,\"data\":null,"
                                   + "\"message\":\"未认证或令牌无效\",\"traceId\":"
-                                  + (request.getHeader("trace_id") == null
+                                  + (request.getHeader(TraceIdFilter.TRACE_ID) == null
                                       ? "null"
-                                      : "\"" + request.getHeader("trace_id") + "\"")
+                                      : "\""
+                                          + request.getHeader(TraceIdFilter.TRACE_ID)
+                                          + "\"")
                                   + "}");
                     }))
         // 过滤器不注册为 Bean（无 @Component）：避免 Boot 把 Filter Bean 再自动登记进
