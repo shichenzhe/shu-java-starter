@@ -1,0 +1,13 @@
+# 测试配置：classpath 上本文件整体遮蔽（非合并）主 application.yml，
+# 故须自带 flyway locations 等；仅 datasource.url 换为独立库文件（随 target/ 清理）。
+spring:
+  datasource:
+    url: jdbc:sqlite:target/test-migration.db
+    driver-class-name: org.sqlite.JDBC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration/sqlite
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
