@@ -14,6 +14,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(operationLogInterceptor).addPathPatterns("/**");
+    // /error 为容器错误分发（404/405/415 等），非业务操作：排除以免多记一行 operation_log
+    registry
+        .addInterceptor(operationLogInterceptor)
+        .addPathPatterns("/**")
+        .excludePathPatterns("/error");
   }
 }

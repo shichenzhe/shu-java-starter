@@ -8,6 +8,10 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration/sqlite
+  jackson:
+    mapper:
+      # 与主 yml 同步：枚举入参大小写不敏感（UserType 小写枚举值）
+      accept-case-insensitive-enums: true
 
 mybatis-plus:
   configuration:

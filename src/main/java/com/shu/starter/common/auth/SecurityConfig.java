@@ -32,6 +32,9 @@ public class SecurityConfig {
             auth ->
                 auth.requestMatchers(
                         "/auth/login",
+                        // 对齐 TS 版 @Public()：refresh 凭 body 内 refreshToken 鉴权，
+                        // 由 AuthService.refresh 自行校验并统一 401
+                        "/auth/refresh",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html",

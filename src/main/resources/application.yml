@@ -23,6 +23,10 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration/sqlite
+  jackson:
+    mapper:
+      # UserType 等枚举值为小写（admin/user）：入参大小写不敏感反序列化，对齐 TS 版
+      accept-case-insensitive-enums: true
 
 mybatis-plus:
   configuration:
