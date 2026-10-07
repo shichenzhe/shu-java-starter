@@ -16,6 +16,16 @@
   <name>{{APP_NAME}}</name>
   <description>{{APP_NAME}} - 基于 shu-java-starter 的服务端应用</description>
 
+  <developers>
+    <developer>
+      <name>{{AUTHOR}}</name>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>{{REPO_URL}}</url>
+  </scm>
+
   <properties>
     <java.version>25</java.version>
     <mybatis-plus.version>3.5.17</mybatis-plus.version>
